@@ -12,6 +12,16 @@ my $build = Module::Build->new(
     },
 
     build_requires => { 'Test::More' => 0, },
+
+    meta_merge => {
+        resources => {
+            bugtracker =>
+              'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Email-Mime-Kit-Renderer-MicroMason',
+            repository =>
+              'http://github.com/mvgrimes/email-mime-kit-renderer-micromason/tree/master'
+        }
+    },
+
 );
 
 $build->create_build_script;
