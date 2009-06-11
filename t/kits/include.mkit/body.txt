@@ -4,8 +4,8 @@ $name
 $cid_for
 </%args>
 
-<& "t/kits/include.mkit/includes/header.msn", %ARGS &>
+<& "includes/header.msn", %ARGS &>
 
 Welcome to WY Corp.
 
-<& "t/kits/include.mkit/includes/footer.msn", %ARGS &>
+<& "includes/footer.msn", %ARGS &>

@@ -9,6 +9,8 @@ my $build = Module::Build->new(
         'perl'             => '5.008',
         'Text::MicroMason' => 2.0,
         'Email::MIME::Kit' => 2.0,
+        'Carp'             => 0,
+        'Cwd'              => 0,
     },
 
     build_requires => { 'Test::More' => 0, },

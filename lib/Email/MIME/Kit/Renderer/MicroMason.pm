@@ -9,6 +9,8 @@ Email::MIME::Kit::Renderer::MicroMason - Render parts of your mail with Text::Mi
 use Moose;
 with 'Email::MIME::Kit::Role::Renderer';
 use Text::MicroMason;
+use Cwd;
+use Carp;
 
 our $VERSION = '1.000';
 
@@ -41,7 +43,7 @@ Then in your email templates (body.txt and body.html) you can do:
     $cid_for
     </%args>
 
-    <& "root/emails/includes/header.msn", %ARGS &>
+    <& "../includes/header.msn", %ARGS &>
 
     <p>
     Dear <% $recruit->name %>,
@@ -51,11 +53,10 @@ Then in your email templates (body.txt and body.html) you can do:
     Welcome to WY Corp.
     </p>
 
-    <& "root/emails/includes/footer.msn", %ARGS &>
+    <& "../includes/footer.msn", %ARGS &>
 
-Any components included with <& ... &> will be relative to the applications
-current directory (not the template file, which would be nice but difficult
-given how EMK passes the template as strings rather than references to files).
+EMK::Renderer::MicroMason will try to make any components included with
+<& ... &> relative to the mkit directory.
 
 =head1 DESCRIPTION
 
@@ -87,19 +88,29 @@ sub render {
     my ( $self, $content_ref, $stash ) = @_;
     $stash ||= {};
 
-    # require Data::Dump; import Data::Dump; dd @_;
+    # use Data::Dump; dd @_;
 
-    ## It would be nice to make any <& &> relative paths, relative to
-    ## the *.mkit dir rather than where the script was run
+    # Change to the mkit dir so any components (eg: <& ... &>) can
+    # be specified as paths relative to the mkit dir
+    my $orig_dir;
+    if ( -d $self->kit->source ) {
+        $orig_dir = getcwd();
+        chdir $self->kit->source
+          or carp "Couln't change to mkit dir: @{[ $self->kit->source ]}";
+    }
 
+    # Parse the template with Text::MicroMason
     my $outbuf = $self->mason->execute( text => $$content_ref, %$stash );
+
+    # Return to the original directory
+    chdir $orig_dir if $orig_dir;
 
     # ddx $outbuf;
     return \$outbuf;
 }
 
 has mason => (
-    is       => 'ro',
+    is => 'ro',
     ## isa      => 'Text::MicroMason',  # T:MM isa strange subclass
     lazy     => 1,
     init_arg => undef,
