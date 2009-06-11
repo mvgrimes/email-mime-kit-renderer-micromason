@@ -1,0 +1,89 @@
+NAME
+    Email::MIME::Kit::Renderer::MicroMason - Render parts of your mail with
+    Text::MicroMason
+
+SYNOPSIS
+    To use MicroMason in your mkit use something like:
+
+        {
+          "renderer": "MicroMason",
+          "header": [
+            { "From": "WY Corp <noreplies@wy.example.com" },
+            { "To": "<% $ARGS{recruit}->email %>" },
+            { "Subject": "Welcome aboard, <% ARGS{recruit}->name %>" }
+          ],
+          "alternatives": [
+            { "type": "text/plain", "path": "body.txt" },
+             {
+              "type": "text/html",
+              "path": "body.html",
+              "container_type": "multipart/related",
+              "attachments": [ { "type": "image/jpeg", "path": "logo.jpg" } ]
+            }
+          ]
+        }
+
+    Then in your email templates (body.txt and body.html) you can do:
+
+        <%args>
+        $recruit
+        $cid_for
+        </%args>
+
+        <& "root/emails/includes/header.msn", %ARGS &>
+
+        <p>
+        Dear <% $recruit->name %>,
+        </p>
+
+        <p>
+        Welcome to WY Corp.
+        </p>
+
+        <& "root/emails/includes/footer.msn", %ARGS &>
+
+    Any components included with <& ... &> will be relative to the
+    applications current directory (not the template file, which would be
+    nice but difficult given how EMK passes the template as strings rather
+    than references to files).
+
+DESCRIPTION
+    This renderer for Email::MIME::Kit uses Text::MicroMason to enable you
+    to write your mkits using basic Mason syntax. See
+    Text::MicroMason::HTMLMason for details on the syntax.
+
+    This is based on Text::MicroMason rather than the full blown HTML::Mason
+    because HTML::Mason is focused on directories and files and
+    Email::MIME::Kit prefers to work with strings. Text::MicroMason
+    accommodates this and is a bit smaller than it's big brother.
+
+  METHODS
+    render()
+            render( $content_ref, $stash )
+
+        Called by Email::MIME::Kit::Renderer to parse template strings
+        ($content_ref) with Text::MicroMason and return a plain text string.
+
+SEE ALSO
+    Mention other useful documentation such as the documentation of related
+    modules or operating system documentation (such as man pages in UNIX),
+    or any relevant external documentation such as RFCs or standards.
+
+    If you have a mailing list set up for your module, mention it here.
+
+    If you have a web site set up for your module, mention it here.
+
+AUTHOR
+    Mark V. Grimes, <>
+
+COPYRIGHT AND LICENSE
+    Copyright (C) 2009 by Mark Grimes
+
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself, either Perl version 5.8.2 or, at
+    your option, any later version of Perl 5 you may have available.
+
+    This is basically just Ricardo SIGNES' EMK::Renderer::TestRenderer with
+    basic integration of Text::MicroMason. Thanks to Ricardo for the
+    excellent EMK package.
+

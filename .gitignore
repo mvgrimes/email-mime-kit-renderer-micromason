@@ -6,4 +6,5 @@ Makefile
 _build/
 blib/
 Email-Mime-Kit-Renderer-MicroMason-*.tar*
+Changes
 

@@ -11,7 +11,7 @@ my $build = Module::Build->new(
         'Email::MIME::Kit' => 2.0,
     },
 
-    build_requires => { 'Test::More ' => 0, },
+    build_requires => { 'Test::More' => 0, },
 );
 
 $build->create_build_script;

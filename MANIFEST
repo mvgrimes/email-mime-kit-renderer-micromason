@@ -1,13 +1,17 @@
+.gitignore
 Build.PL
-ChangeLog
+Changes
 INSTALL
 lib/Email/MIME/Kit/Renderer/MicroMason.pm
 Makefile.PL
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
-samples/
-t/00-new.t
+samples/kits/include.mkit/body.txt
+samples/kits/include.mkit/includes/footer.msn
+samples/kits/include.mkit/includes/header.msn
+samples/kits/include.mkit/manifest.json
+samples/kits/test.mkit/manifest.json
 t/00-use.t
 t/01-basic.t
 t/02-component.t
