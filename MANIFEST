@@ -1,0 +1,23 @@
+Build.PL
+ChangeLog
+INSTALL
+lib/Email/MIME/Kit/Renderer/MicroMason.pm
+Makefile.PL
+MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
+README
+samples/
+t/00-new.t
+t/00-use.t
+t/01-basic.t
+t/02-component.t
+t/96-kwalitee.t
+t/97-critic.t
+t/98-pod.t
+t/99-podcoverage.t
+t/kits/include.mkit/body.txt
+t/kits/include.mkit/includes/footer.msn
+t/kits/include.mkit/includes/header.msn
+t/kits/include.mkit/manifest.json
+t/kits/test.mkit/manifest.json
+t/perlcriticrc

@@ -1,0 +1,9 @@
+MANIFEST.bak
+Build
+META.yml
+Makefile.PL
+Makefile
+_build/
+blib/
+Email-Mime-Kit-Renderer-MicroMason-*.tar*
+
