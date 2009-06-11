@@ -30,7 +30,7 @@ SYNOPSIS
         $cid_for
         </%args>
 
-        <& "root/emails/includes/header.msn", %ARGS &>
+        <& "../includes/header.msn", %ARGS &>
 
         <p>
         Dear <% $recruit->name %>,
@@ -40,12 +40,10 @@ SYNOPSIS
         Welcome to WY Corp.
         </p>
 
-        <& "root/emails/includes/footer.msn", %ARGS &>
+        <& "../includes/footer.msn", %ARGS &>
 
-    Any components included with <& ... &> will be relative to the
-    applications current directory (not the template file, which would be
-    nice but difficult given how EMK passes the template as strings rather
-    than references to files).
+    EMK::Renderer::MicroMason will try to make any components included with
+    <& ... &> relative to the mkit directory.
 
 DESCRIPTION
     This renderer for Email::MIME::Kit uses Text::MicroMason to enable you
@@ -65,13 +63,8 @@ DESCRIPTION
         ($content_ref) with Text::MicroMason and return a plain text string.
 
 SEE ALSO
-    Mention other useful documentation such as the documentation of related
-    modules or operating system documentation (such as man pages in UNIX),
-    or any relevant external documentation such as RFCs or standards.
-
-    If you have a mailing list set up for your module, mention it here.
-
-    If you have a web site set up for your module, mention it here.
+    Email::MIME::Kit, HTML::Mason, Text::MicroMason, and
+    Text::MicroMason::HTMLMason.
 
 AUTHOR
     Mark V. Grimes, <>

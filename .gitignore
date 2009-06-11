@@ -5,6 +5,6 @@ Makefile.PL
 Makefile
 _build/
 blib/
-Email-Mime-Kit-Renderer-MicroMason-*.tar*
 Changes
-
+Debian_CPANTS.txt
+Email-MIME-Kit-Renderer-MicroMason-*

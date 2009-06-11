@@ -12,7 +12,7 @@ use Text::MicroMason;
 use Cwd;
 use Carp;
 
-our $VERSION = '1.000';
+our $VERSION = '1.001';
 
 =head1 SYNOPSIS
 
