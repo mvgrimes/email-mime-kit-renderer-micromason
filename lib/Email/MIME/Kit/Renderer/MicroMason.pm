@@ -100,7 +100,7 @@ sub render {
 
 has mason => (
     is       => 'ro',
-    ## isa      => 'Text::MicroMason',
+    ## isa      => 'Text::MicroMason',  # T:MM isa strange subclass
     lazy     => 1,
     init_arg => undef,
     default  => sub {
@@ -113,14 +113,8 @@ no Moose;
 
 =head1 SEE ALSO
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
-
-If you have a mailing list set up for your module, mention it here.
-
-If you have a web site set up for your module, mention it here.
+L<Email::MIME::Kit>, L<HTML::Mason>, L<Text::MicroMason>,
+and L<Text::MicroMason::HTMLMason>.
 
 =head1 AUTHOR
 
@@ -134,7 +128,7 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.2 or,
 at your option, any later version of Perl 5 you may have available.
 
-This is basically just Ricardo SIGNES' L<EMK::Renderer::TestRenderer> with
+This is basically just Ricardo SIGNES' EMK::Renderer::TestRenderer with
 basic integration of L<Text::MicroMason>. Thanks to Ricardo for the
 excellent EMK package.
 
