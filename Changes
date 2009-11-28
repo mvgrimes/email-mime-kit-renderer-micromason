@@ -4,6 +4,9 @@
 	- Added requirements for Carp/Cwd (both in core I believe) 	
 	- Updated tests
 
+1.02 - Sat Nov 28 09:37:33 2009
+	Added support for the -Filters mixin
+
 2009-06-11  Mark Grimes <mgrimes@cpan.org>
 	Updated the SEE ALSO section of the pod and added another comment
 
