@@ -6,3 +6,4 @@
 \.git/
 ^MANIFEST\.SKIP$
 .releaserc
+^MYMETA.yml$
