@@ -12,7 +12,7 @@ use Text::MicroMason;
 use Cwd;
 use Carp;
 
-our $VERSION = '1.001';
+our $VERSION = '1.002';
 
 =head1 SYNOPSIS
 
@@ -115,7 +115,7 @@ has mason => (
     lazy     => 1,
     init_arg => undef,
     default  => sub {
-        Text::MicroMason->new();
+        Text::MicroMason->new(-Filters);
     },
 );
 

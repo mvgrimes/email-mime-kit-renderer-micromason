@@ -1,0 +1,12 @@
+2009-06-11  Mark Grimes <mgrimes@cpan.org>
+	Perform a chdir so any included components can be relative to mkit dir
+	- Updated documentation to reflect change 	
+	- Added requirements for Carp/Cwd (both in core I believe) 	
+	- Updated tests
+
+2009-06-11  Mark Grimes <mgrimes@cpan.org>
+	Updated the SEE ALSO section of the pod and added another comment
+
+2009-06-11  Mark Grimes <mgrimes@cpan.org>
+	Added resources section for META.yaml
+
