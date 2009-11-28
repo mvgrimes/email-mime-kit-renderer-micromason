@@ -1,6 +1,7 @@
 MANIFEST.bak
 Build
 META.yml
+MYMETA.yml
 Makefile.PL
 Makefile
 _build/
