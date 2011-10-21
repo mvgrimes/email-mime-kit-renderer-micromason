@@ -12,7 +12,7 @@ use Text::MicroMason;
 use Cwd;
 use Carp;
 
-our $VERSION = '1.002';
+our $VERSION = '1.20';
 
 =head1 SYNOPSIS
 
@@ -88,8 +88,6 @@ sub render {
     my ( $self, $content_ref, $stash ) = @_;
     $stash ||= {};
 
-    # use Data::Dump; dd @_;
-
     # Change to the mkit dir so any components (eg: <& ... &>) can
     # be specified as paths relative to the mkit dir
     my $orig_dir;
@@ -100,12 +98,16 @@ sub render {
     }
 
     # Parse the template with Text::MicroMason
-    my $outbuf = $self->mason->execute( text => $$content_ref, %$stash );
+    my $outbuf =
+      eval { $self->mason->execute( text => $$content_ref, %$stash ); };
+    my $error = $@;
 
     # Return to the original directory
     chdir $orig_dir if $orig_dir;
 
-    # ddx $outbuf;
+    # If mason->execute threw an error, go ahead and re-throw now
+    die $error if $error;
+
     return \$outbuf;
 }
 
@@ -129,7 +131,7 @@ and L<Text::MicroMason::HTMLMason>.
 
 =head1 AUTHOR
 
-Mark V. Grimes, E<lt>E<gt>
+Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
