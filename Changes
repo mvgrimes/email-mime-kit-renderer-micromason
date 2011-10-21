@@ -1,11 +1,12 @@
-2009-06-11  Mark Grimes <mgrimes@cpan.org>
-	Perform a chdir so any included components can be relative to mkit dir
-	- Updated documentation to reflect change 	
-	- Added requirements for Carp/Cwd (both in core I believe) 	
-	- Updated tests
+Change Log for Email::MIME::Kit::Renderer::MicroMason
+
+1.002 - Fri Oct 21 13:59:03 EDT 2011
+	Added cleanup code in case mason->render dies
+    - Always need to make sure we chdir back
 
 1.02 - Sat Nov 28 09:37:33 2009
 	Added support for the -Filters mixin
+	Perform a chdir so any included components can be relative to mkit dir
 
 2009-06-11  Mark Grimes <mgrimes@cpan.org>
 	Updated the SEE ALSO section of the pod and added another comment

@@ -1,10 +1,14 @@
 MANIFEST.bak
 Build
 META.yml
+META.json
 MYMETA.yml
+MYMETA.json
 Makefile.PL
 Makefile
 _build/
 blib/
 Debian_CPANTS.txt
 Email-MIME-Kit-Renderer-MicroMason-*
+*.swp
+Changes.bak
