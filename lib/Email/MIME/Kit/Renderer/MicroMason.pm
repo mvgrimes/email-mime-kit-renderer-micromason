@@ -8,6 +8,7 @@ Email::MIME::Kit::Renderer::MicroMason - Render parts of your mail with Text::Mi
 
 use Moose;
 with 'Email::MIME::Kit::Role::Renderer';
+use Scalar::Util ();
 use Text::MicroMason;
 use Cwd;
 use Carp;
@@ -88,25 +89,8 @@ sub render {
     my ( $self, $content_ref, $stash ) = @_;
     $stash ||= {};
 
-    # Change to the mkit dir so any components (eg: <& ... &>) can
-    # be specified as paths relative to the mkit dir
-    my $orig_dir;
-    if ( -d $self->kit->source ) {
-        $orig_dir = getcwd();
-        chdir $self->kit->source
-          or carp "Couln't change to mkit dir: @{[ $self->kit->source ]}";
-    }
-
     # Parse the template with Text::MicroMason
-    my $outbuf =
-      eval { $self->mason->execute( text => $$content_ref, %$stash ); };
-    my $error = $@;
-
-    # Return to the original directory
-    chdir $orig_dir if $orig_dir;
-
-    # If mason->execute threw an error, go ahead and re-throw now
-    die $error if $error;
+    my $outbuf = $self->mason->execute( text => $$content_ref, %$stash );
 
     return \$outbuf;
 }
@@ -117,9 +101,24 @@ has mason => (
     lazy     => 1,
     init_arg => undef,
     default  => sub {
-        Text::MicroMason->new(-Filters);
+        my ($self) = @_;
+        my $mason = Text::MicroMason->new('-Filters', '-MKit');
+        $mason->{__mkit_renderer} = $self;
+        Scalar::Util::weaken($mason->{__mkit_renderer});
+        return $mason;
     },
 );
+
+{
+  $INC{'Text/MicroMason/MKit.pm'} = 1;
+  package Text::MicroMason::MKit;
+
+  sub read_file {
+    my ($self, $file) = @_;
+    my $text = $self->{__mkit_renderer}->kit->get_kit_entry($file);
+    return $$text;
+  }
+}
 
 no Moose;
 1;
