@@ -1,19 +1,64 @@
 package Email::MIME::Kit::Renderer::MicroMason;
 
-=head1 NAME
-
-Email::MIME::Kit::Renderer::MicroMason - Render parts of your mail with Text::MicroMason
-
-=cut
+# ABSTRACT: Render parts of your mail with Text::MicroMason
 
 use Moose;
 with 'Email::MIME::Kit::Role::Renderer';
 use Scalar::Util ();
 use Text::MicroMason;
-use Cwd;
 use Carp;
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
+
+sub render {
+    my ( $self, $content_ref, $stash ) = @_;
+    $stash ||= {};
+
+    # Parse the template with Text::MicroMason
+    my $outbuf = $self->mason->execute( text => $$content_ref, %$stash );
+
+    return \$outbuf;
+}
+
+has mason => (
+    is => 'ro',
+    ## isa      => 'Text::MicroMason',  # T:MM isa strange subclass
+    lazy     => 1,
+    init_arg => undef,
+    default  => sub {
+        my ($self) = @_;
+        my $mason = Text::MicroMason->new('-Filters', '-MKit');
+        $mason->{__mkit_renderer} = $self;
+        Scalar::Util::weaken($mason->{__mkit_renderer});
+        return $mason;
+    },
+);
+
+{
+  $INC{'Text/MicroMason/MKit.pm'} = 1;
+  package Text::MicroMason::MKit;
+
+  sub read_file {
+    my ($self, $file) = @_;
+    my $text = $self->{__mkit_renderer}->kit->get_kit_entry($file);
+    return $$text;
+  }
+}
+
+no Moose;
+1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Email::MIME::Kit::Renderer::MicroMason - Render parts of your mail with Text::MicroMason
+
+=head1 VERSION
+
+version 1.21
 
 =head1 SYNOPSIS
 
@@ -83,45 +128,11 @@ Called by L<Email::MIME::Kit::Renderer> to parse template strings
 
 =back
 
-=cut
+=head1 ACKNOWLEGEMENTS
 
-sub render {
-    my ( $self, $content_ref, $stash ) = @_;
-    $stash ||= {};
-
-    # Parse the template with Text::MicroMason
-    my $outbuf = $self->mason->execute( text => $$content_ref, %$stash );
-
-    return \$outbuf;
-}
-
-has mason => (
-    is => 'ro',
-    ## isa      => 'Text::MicroMason',  # T:MM isa strange subclass
-    lazy     => 1,
-    init_arg => undef,
-    default  => sub {
-        my ($self) = @_;
-        my $mason = Text::MicroMason->new('-Filters', '-MKit');
-        $mason->{__mkit_renderer} = $self;
-        Scalar::Util::weaken($mason->{__mkit_renderer});
-        return $mason;
-    },
-);
-
-{
-  $INC{'Text/MicroMason/MKit.pm'} = 1;
-  package Text::MicroMason::MKit;
-
-  sub read_file {
-    my ($self, $file) = @_;
-    my $text = $self->{__mkit_renderer}->kit->get_kit_entry($file);
-    return $$text;
-  }
-}
-
-no Moose;
-1;
+This is basically just Ricardo SIGNES' EMK::Renderer::TestRenderer with
+basic integration of L<Text::MicroMason>. Thanks to Ricardo for the
+excellent EMK package.
 
 =head1 SEE ALSO
 
@@ -134,14 +145,9 @@ Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Mark Grimes
+This software is copyright (c) 2013 by Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.2 or,
-at your option, any later version of Perl 5 you may have available.
-
-This is basically just Ricardo SIGNES' EMK::Renderer::TestRenderer with
-basic integration of L<Text::MicroMason>. Thanks to Ricardo for the
-excellent EMK package.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

@@ -2,6 +2,9 @@ NAME
     Email::MIME::Kit::Renderer::MicroMason - Render parts of your mail with
     Text::MicroMason
 
+VERSION
+    version 1.21
+
 SYNOPSIS
     To use MicroMason in your mkit use something like:
 
@@ -62,6 +65,11 @@ DESCRIPTION
         Called by Email::MIME::Kit::Renderer to parse template strings
         ($content_ref) with Text::MicroMason and return a plain text string.
 
+ACKNOWLEGEMENTS
+    This is basically just Ricardo SIGNES' EMK::Renderer::TestRenderer with
+    basic integration of Text::MicroMason. Thanks to Ricardo for the
+    excellent EMK package.
+
 SEE ALSO
     Email::MIME::Kit, HTML::Mason, Text::MicroMason, and
     Text::MicroMason::HTMLMason.
@@ -70,13 +78,8 @@ AUTHOR
     Mark Grimes, <mgrimes@cpan.org>
 
 COPYRIGHT AND LICENSE
-    Copyright (C) 2009 by Mark Grimes
+    This software is copyright (c) 2012 by Mark Grimes, <mgrimes@cpan.org>.
 
-    This library is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself, either Perl version 5.8.2 or, at
-    your option, any later version of Perl 5 you may have available.
-
-    This is basically just Ricardo SIGNES' EMK::Renderer::TestRenderer with
-    basic integration of Text::MicroMason. Thanks to Ricardo for the
-    excellent EMK package.
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 

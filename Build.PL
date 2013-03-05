@@ -9,7 +9,6 @@ my $build = Module::Build->new(
         'Text::MicroMason' => 2.0,
         'Email::MIME::Kit' => 2.0,
         'Carp'             => 0,
-        'Cwd'              => 0,
     },
 
     configure_requires => { 'Module::Build' => '0.36', },

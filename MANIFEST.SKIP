@@ -7,3 +7,6 @@
 ^MANIFEST\.SKIP$
 .releaserc
 ^MYMETA.yml$
+^MYMETA.json$
+^weaver.ini$
+^.gitignore$
